@@ -10,8 +10,9 @@
 #     sources/
 #       contracts/
 #         ... (source code)
+#       @openzeppelin/
+#         ... (source code)
 #       ... (other dependencies)
-#     build-info/
 #
 # Usage:
 #
@@ -26,13 +27,10 @@ set -o pipefail
 
 # Ensure the output directory is provided using parameter expansion.
 output_dir="${1:?Please provide an output directory. ${usage}}"
-mkdir -p "${output_dir}/artifacts"
+mkdir -p "${output_dir}"
 
-# Copy the ${script_dir}/artifacts/ directory into the output directory.
-cp -r "${script_dir}/out" "${output_dir}/artifacts/contracts"
-
-# Move the build-info directory up a level.
-mv "${output_dir}/artifacts/contracts/build-info" "${output_dir}/artifacts/build-info"
+# Copy the ${script_dir}/build/artifacts/ directory into the output directory.
+cp -r "${script_dir}/build/artifacts" "${output_dir}"
 
 # Flatten all .sol files in the contracts/ directory.
 "${script_dir}/flatten-all.sh"
